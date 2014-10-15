@@ -25,6 +25,18 @@ class PicturesController < ApplicationController
   # POST /pictures.json
   def create
     @picture = Picture.new(picture_params)
+    image_content = @picture.hq
+    @picture.hq = ""
+    @picture.save
+
+    id = @picture.id
+    file_name = id.to_s + ".jpg"
+    @picture.hq = "/uploads/" + file_name
+    File.open(Rails.root.join('public', 'uploads', file_name), 'wb') do |file|
+      file.write(image_content.read)
+    end
+
+    Resque.enqueue(ImageResizer, id)
 
     respond_to do |format|
       if @picture.save

@@ -14,8 +14,8 @@
     <% @pictures.each do |picture| %>
       <tr>
         <td><%= picture.title %></td>
-        <td><%= picture.hq %></td>
-        <td><%= picture.lq %></td>
+        <td><img src="<%= picture.hq %>" style="max-width: 200px; max-height: 200px;"/></td>
+        <td><img src="<%= picture.lq %>" style="max-width: 200px; max-height: 200px;"/></td>
         <td><%= link_to 'Show', picture %></td>
         <td><%= link_to 'Edit', edit_picture_path(picture) %></td>
         <td><%= link_to 'Destroy', picture, method: :delete, data: { confirm: 'Are you sure?' } %></td>
